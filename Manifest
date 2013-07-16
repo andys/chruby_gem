@@ -1,4 +1,5 @@
 CHANGELOG
 Manifest
+README.md
 Rakefile
 ext/chruby_gem/extconf.rb
