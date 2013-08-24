@@ -8,6 +8,7 @@ File.open('Makefile', 'w') do |mkf|
 
   ruby_install_version = '0.2.1'
   chruby_version = '0.3.6'
+  rubies = ['1.9', '2.0']
 
   mkf.puts <<EOF
 
@@ -32,13 +33,12 @@ chruby/Makefile:
 /usr/local/bin/chruby-exec: chruby/Makefile
 	cd chruby && make install
 
-/opt/rubies:
-	ruby-install ruby 2.0 -- --disable-install-doc
-	ruby-install ruby 1.9 -- --disable-install-doc
-	bash -c 'source /usr/local/share/chruby/chruby.sh ; for ruby in `ls -1 /opt/rubies` ; do echo $ruby ; chruby $ruby ; gem install bundler ; done ; chruby system'
-  
 EOF
 
+
+  mkf.puts '/opt/rubies:'
+  ['1.9', '2.0'].each {|ruby|  mkf.puts "\truby-install ruby #{ruby} -- --disable-install-doc" }
+  ['1.9', '2.0'].each {|ruby|  mkf.puts "\tsource /usr/local/share/chruby/chruby.sh ; chruby #{ruby} ; gem install bundler" }
   
 end
  
